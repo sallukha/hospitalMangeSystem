@@ -1,9 +1,9 @@
-import { Link } from "react-router-dom";
+import { Link,useNavigate } from "react-router-dom";
 import { FaHandHoldingMedical } from "react-icons/fa";
 import { useForm, SubmitHandler } from "react-hook-form";
 import axios from "axios";
 interface IFormInput {
-    fullName: string;
+    fullname: string;
     email: string;
     password: string;
     confirmPassword: string;
@@ -12,18 +12,21 @@ interface SignUpProps {
     setIsAuthenticated: (isAuthenticated: boolean) => void;
 }
 const SignUp: React.FC<SignUpProps> = ({ setIsAuthenticated }) => {
+
+    const navigate = useNavigate();
     const { register, handleSubmit, formState: { errors } } = useForm<IFormInput>();
 
     const onSubmit: SubmitHandler<IFormInput> = async data => {
         try {
             const res = await axios.post("http://localhost:3000/sing_up", {
-                fullName: data.fullName,
+                fullname: data.fullname,
                 email: data.email,
                 password: data.password,
                 confirmPassword: data.confirmPassword
             });
             console.log(res.data);
             setIsAuthenticated(true);
+            navigate("/");
         } catch (error) {
             console.error("SignUp error:", error);
         }
@@ -37,12 +40,12 @@ const SignUp: React.FC<SignUpProps> = ({ setIsAuthenticated }) => {
                     <div className="mb-4">
                         <label className="block text-gray-600 text-sm font-medium mb-2">Full Name</label>
                         <input
-                            {...register("fullName", { required: "Full Name is required" })}
+                            {...register("fullname", { required: "Full Name is required" })}
                             type="text"
                             className="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-400"
                             placeholder="Enter your full name"
                         />
-                        {errors.fullName && <span className="text-red-700">{errors.fullName.message}</span>}
+                        {errors.fullname && <span className="text-red-700">{errors.fullname.message}</span>}
                     </div>
                     <div className="mb-4">
                         <label className="block text-gray-600 text-sm font-medium mb-2">Email</label>

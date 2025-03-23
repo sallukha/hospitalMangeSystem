@@ -1,23 +1,20 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { useGlobalContext } from "../Context/ContextApi";
- 
+
 interface Order {
     id: string;
     amount: number;
     currency: string;
-     
-    
 }
-
-  
-const LabsTestForm: React.FC = () => {
+    const LabsTestForm: React.FC = () => {
     const [isProcessing, setIsProcessing] = useState<boolean>(false);
     const [isRazorpayLoaded, setIsRazorpayLoaded] = useState<boolean>(false);
     const [selectedTests, setSelectedTests] = useState<string[]>([]);
     const [totalPrice, setTotalPrice] = useState<number>(0);
-    const { name, setName  , age, setAge , gender, setGender,  contact, setContact, saveInputRecord}=useGlobalContext()
-    // Test Prices
+    const { name, setName, age, setAge, gender, setGender, contact, setContact,
+    } = useGlobalContext()
+
     const testPrices: Record<string, number> = {
         "CBC": 500, "LFT": 700, "Lipid Profile": 1000, "TFT": 800,
         "KFT": 600, "Blood Sugar": 300, "COVID-19 Test": 1200, "Dengue Test": 1100
@@ -108,27 +105,24 @@ const LabsTestForm: React.FC = () => {
             setIsProcessing(false);
         }
     };
-
-    
-
     return (
         <div className="max-w-lg mx-auto p-6 bg-white shadow-lg rounded-lg mt-10">
             <h2 className="text-2xl font-semibold text-center mb-6">Patient Lab Test Form</h2>
             <form onSubmit={handlePayment}>
                 <div className="mb-4">
                     <label className="block text-gray-700">Full Name</label>
-                    <input type="text" className="w-full p-2 border rounded" placeholder="Enter your name" required value={name} 
-                     onChange={(e)=>setName(e.target.value)}/>
+                    <input type="text" className="w-full p-2 border rounded" placeholder="Enter your name" required value={name}
+                        onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700">Age</label>
-                    <input type="number" className="w-full p-2 border rounded" placeholder="Enter your age" required  value={age}
-                     onChange={(e)=>setAge(Number(e.target.value))}
+                    <input type="number" className="w-full p-2 border rounded" placeholder="Enter your age" required value={age}
+                        onChange={(e) => setAge(Number(e.target.value))}
                     />
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700">Gender</label>
-                    <select className="w-full p-2 border rounded"  required value={gender} onChange={(e)=>setGender(e.target.value)}>
+                    <select className="w-full p-2 border rounded" required value={gender} onChange={(e) => setGender(e.target.value)}>
                         <option>Male</option>
                         <option>Female</option>
                         <option>Other</option>
@@ -136,8 +130,8 @@ const LabsTestForm: React.FC = () => {
                 </div>
                 <div className="mb-4">
                     <label className="block text-gray-700">Contact Number</label>
-                    <input type="tel" className="w-full p-2 border rounded" placeholder="Enter your phone number" required  value={contact}
-                     onChange={(e)=>setContact(e.target.value)}
+                    <input type="tel" className="w-full p-2 border rounded" placeholder="Enter your phone number" required value={contact}
+                        onChange={(e) => setContact(e.target.value)}
                     />
                 </div>
                 <div className="mb-4">
@@ -146,7 +140,7 @@ const LabsTestForm: React.FC = () => {
                         {Object.keys(testPrices).map((item, index) => (
                             <label key={index} className="flex items-center">
                                 <input
-                                   
+
                                     type="checkbox"
                                     className="mr-2"
                                     checked={selectedTests.includes(item)}
@@ -173,14 +167,13 @@ const LabsTestForm: React.FC = () => {
                     type="submit"
                     className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                     disabled={isProcessing}
-                           >
+                >
                     {isProcessing ? "Processing..." : "Submit & Pay"}
                 </button>
 
 
-                 
             </form>
-            <button className="" onClick={saveInputRecord}>save</button>
+
         </div>
     );
 };
